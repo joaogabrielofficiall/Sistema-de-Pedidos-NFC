@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     renderizarProdutos("entradas");
-    naoCarrinho();
+    botaoVerItem()
 });
 
 /*Função de exemplo*/
@@ -19,36 +19,6 @@ const produtos = [
         imagem: "nuggets.png"
     },
     {
-        nome: "Nuggets crocantes",
-        preco: 18.00,
-        categoria: "entradas",
-        imagem: "nuggets.png"
-    },
-    {
-        nome: "Nuggets crocantes",
-        preco: 18.00,
-        categoria: "entradas",
-        imagem: "nuggets.png"
-    },
-    {
-        nome: "Nuggets crocantes",
-        preco: 18.00,
-        categoria: "entradas",
-        imagem: "nuggets.png"
-    },
-    {
-        nome: "Nuggets crocantes",
-        preco: 18.00,
-        categoria: "entradas",
-        imagem: "nuggets.png"
-    },
-    {
-        nome: "Nuggets crocantes",
-        preco: 18.00,
-        categoria: "entradas",
-        imagem: "nuggets.png"
-    },
-    {
         nome: "X-Bacon",
         preco: 30.00,
         categoria: "burgers tradicionais",
@@ -58,11 +28,31 @@ const produtos = [
 
 let carrinho = [];
 
-function verPedido(){
-    const verPedido = document.querySelector(".verPedido");
+function botaoVerItem() {
+    const botaoVer = document.querySelector(".botaoVer");
 
-    verPedido.classList.remove("escondido");
-    verPedido.classList.add("visivel");
+    if (carrinho.length === 0) {
+        botaoVer.classList.add("naoTem");
+    } else {
+        botaoVer.classList.remove("naoTem");
+    }
+}
+
+function aparecerCarrinho(){
+    const modal  = document.querySelector(".verPedido");
+
+    if (modal.classList.contains("escondido")){
+        modal.classList.remove("escondido");
+        modal.classList.add("visivel");
+
+    }else{
+        modal.classList.remove("visivel");
+        modal.classList.add("escondido");
+    }
+}
+
+function verPedido(){
+    aparecerCarrinho()
 
     const conteinerCarrinho = document.querySelector(".conteinerCarrinho")
 
@@ -101,6 +91,19 @@ function verPedido(){
             </div>
         `;
     });
+
+    const footterPrecoTotal = document.querySelector(".precoTotal");
+    
+    footterPrecoTotal.innerHTML = '';
+
+    let precoTotal = 0
+        
+    carrinho.forEach(item => {
+        precoTotal += (item.preco * item.quantidade) 
+    });
+
+
+    footterPrecoTotal.innerHTML = `R$ ${precoTotal.toFixed(2)}`;
 
 
 
@@ -152,6 +155,7 @@ function atualizarCarrinho() {
         const container = document.querySelector(".card-carrinho");
         const precoResumo = document.querySelector(".preço-resumo");
 
+
         container.innerHTML = "";
 
         let precoTotal = 0
@@ -170,7 +174,14 @@ function atualizarCarrinho() {
             `;
         });
 
-        naoCarrinho();
+        
+        if (carrinho.length === 0) {
+            container.style.border = 'none';
+        } else {
+            container.style.border = '2px solid rgba(0, 0, 0, 0.699)';
+        }
+
+        
     }
 
     function adicionarAoCarrinho(produto) {
@@ -187,6 +198,7 @@ function atualizarCarrinho() {
         }
 
         atualizarCarrinho();
+        botaoVerItem()
     }
 
 document.querySelectorAll(".menu-lateral li").forEach(item => {
@@ -197,3 +209,20 @@ document.querySelectorAll(".menu-lateral li").forEach(item => {
         renderizarProdutos(categoria);
     });
 });
+
+function finalizarPedido() {
+    const modal = document.querySelector(".pedidoEnviado");
+
+    modal.classList.remove("escondido");
+}
+
+function fecharMensagem() {
+    const modal = document.querySelector(".pedidoEnviado");
+
+    modal.classList.add("escondido");
+    location.reload();
+
+    setTimeout(() => {
+        location.reload();
+    }, 300); // tempo opcional
+}

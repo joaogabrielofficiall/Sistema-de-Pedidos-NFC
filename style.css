@@ -3,6 +3,7 @@
 * {
     padding: 0; margin: 0; 
     box-sizing: border-box;
+    text-transform: uppercase;
 }
 
 html {
@@ -255,7 +256,7 @@ body {
     width: 300px;
     color: rgb(0, 0, 0);
     font-size: 11px;
-    border: 2px solid rgba(0, 0, 0, 0.699);
+    
     border-radius: 5px;
     flex-wrap: wrap;
     max-height: 125px;
@@ -294,10 +295,33 @@ body {
 
 }
 
+.botaoCancelar{
+    background-color: #b60707c5;
+    color: rgba(255, 255, 255, 0.808);
+    border: none;
+}
+
+.botaoCancelar:hover{
+    background-color: #b60707e0;
+}
+
+.botaoVer {
+    border: 1px solid rgba(0, 0, 0, 0.808);
+}
+
 .botões-conteudo-carrinho > button {
     width: 160px;
     height: 30px;
+    cursor: pointer;
+    border-radius: 50px;
+    
+}
 
+
+
+.botaoVer.naoTem {
+    opacity: 0.5;
+    pointer-events: none; 
 
 }
 
@@ -457,7 +481,110 @@ body {
 
 .resumo {
     grid-area: 3 / 1 / 4 / -1;
+
     padding: 15px;
     border-top: 1px solid #ddd;
     background: white;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.total strong {
+    font-size: 18px;
+}
+
+.pedidoCompleto {
+    width: 100%;
+    height: 45px;
+
+    background: #ffcc00;
+    border: none;
+    border-radius: 6px;
+
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.pedidoCompleto:hover {
+    background: #e6b800;
+}
+
+.acoes {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    gap: 30px;
+}
+
+.continuarComprando {
+    background: none;
+    border: 1px dashed #555;
+    color: #555;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 5px 10px;
+    width: 500px;
+}
+
+.cancelarPedido {
+    background: none;
+    border: none;
+    color: red;
+    border-radius: 6px;
+    padding: 5px 10px;
+    width: 500px;
+    cursor: pointer;
+}
+
+.pedidoEnviado {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100dvh;
+
+    background: rgba(0,0,0,0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.pedidoEnviado.escondido {
+    display: none;
+}
+
+.mensagem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.mensagem button {
+    margin-top: 15px;
+    padding: 10px;
+    width: 60%;
+    border: none;
+    color: white;
+    background: #194e00;
+    border-radius: 5px;
+    cursor: pointer;
 }

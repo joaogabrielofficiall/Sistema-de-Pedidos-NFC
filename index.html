@@ -55,8 +55,8 @@
                 </div>
             </div>
             <div class="botões-conteudo-carrinho">
-                <button onclick="cancelarPedido()">Cancelar Pedido</button>
-                <button onclick="verPedido()">ver seu pedido</button>
+                <button onclick="cancelarPedido()" class="botaoCancelar">Cancelar Pedido</button>
+                <button onclick="verPedido()" class="botaoVer">ver seu pedido</button>
             </div>
         </div>
     </div>
@@ -76,9 +76,28 @@
         </section>
         
         <footer class="resumo">
-            <p>Total: R$ 119,70</p>
-            <button>Pedido completo</button>
+            <div class="total">
+                <span>Total</span>
+                <strong class="precoTotal">R$ 00,00</strong>
+            </div>
+
+            <button class="pedidoCompleto" onclick="finalizarPedido()">
+                Pedido completo
+            </button>
+
+            <div class="acoes">
+                <button class="cancelarPedido">Cancelar pedido</button>
+                <button class="continuarComprando" onclick="aparecerCarrinho()">Continuar comprando</button>           
+            </div>
         </footer>
+    </div>
+
+    <div class="pedidoEnviado escondido">
+        <div class="mensagem">
+            <h2>Pedido enviado!</h2>
+            <p>Seu pedido foi enviado para a cozinha</p>
+            <button onclick="fecharMensagem()">OK</button>
+        </div>
     </div>
 </body>
 
