@@ -64,6 +64,52 @@ function verPedido(){
     verPedido.classList.remove("escondido");
     verPedido.classList.add("visivel");
 
+    const conteinerCarrinho = document.querySelector(".conteinerCarrinho")
+
+
+
+    conteinerCarrinho.innerHTML = ""; 
+
+
+
+    carrinho.forEach(item => {
+        conteinerCarrinho.innerHTML += `
+            <div class="itensConteinerCarrinho">
+                <img src="imagens/${item.imagem}" alt="">
+
+                <div class="meioNome">
+    
+                    <div class="linha1">
+                        <h3>${item.nome}</h3>
+
+                        <div class="quantidade">
+                            <button class="diminuir">-</button>
+                            <span class="qtd">${item.quantidade}</span>
+                            <button class="aumentar">+</button>
+                        </div>
+                    </div>
+
+                    <div class="linha2">
+                        <button class="detalhe">Detalhes</button>
+                        <button class="excluir">Excluir</button>
+                    </div>
+
+                </div>
+
+
+                <span class="preco">R$ ${item.preco.toFixed(2)}</span>
+            </div>
+        `;
+    });
+
+
+
+
+
+
+
+
+
     /*
     if (carrinho.length === 0) {
         verPedido.classList.add("escondido");
