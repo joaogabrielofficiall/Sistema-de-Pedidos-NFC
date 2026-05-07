@@ -30,6 +30,78 @@ body {
     font-family: 'Permanent Marker', cursive;
 }
 
+/* Tela inicial */
+
+.telaInicial {
+    width: 100vw;
+    height: 100dvh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+.background {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+}
+
+.conteudoInicial {
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    display: grid;
+    grid-template-rows: 60% 40%;
+
+    z-index: 2;
+    
+    align-items: center;
+}
+
+.conteudoInicial .botoes{ 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+.conteudoInicial  button {
+    width: 70%;
+    background-color: #000000e7;
+    color: white;
+    border: 1px solid white;
+    border-radius: 20px;
+    height: 55px;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.582);
+}
+
+.escondido {
+    display: none;
+}
+
+.visivel {
+    display: flex;
+}
+
 /* header */
 #header_logo {
     display: grid;

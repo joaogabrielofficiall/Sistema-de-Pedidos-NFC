@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     renderizarProdutos("entradas");
-    botaoVerItem()
+    botaoVerItem();
 });
 
 /*Função de exemplo*/
@@ -27,6 +27,18 @@ const produtos = [
 ];
 
 let carrinho = [];
+
+function entrarSistema() {
+    const telaInicial = document.querySelector(".telaInicial");
+    const app = document.querySelector(".app");
+
+    telaInicial.classList.remove("visivel");
+    telaInicial.classList.add("escondido");
+
+    app.classList.remove("escondido");
+    app.classList.add("visivel");
+    renderizarProdutos("entradas");
+}
 
 function botaoVerItem() {
     const botaoVer = document.querySelector(".botaoVer");
