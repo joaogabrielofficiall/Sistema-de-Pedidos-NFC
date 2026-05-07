@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    renderizarProdutos("entradas");
     botaoVerItem();
+    verificarPedidoExistente();
 });
 
 /*Função de exemplo*/
@@ -28,6 +28,27 @@ const produtos = [
 
 let carrinho = [];
 
+function novoPedido() {
+    entrarSistema();
+}
+
+function continuarPedido() {
+    alert("Tela de continuar pedido");
+}
+
+function verificarPedidoExistente() {
+    const btnContinuar = document.querySelector(".btnContinuar");
+
+    if (carrinho.length === 0) {
+        btnContinuar.disabled = true;
+        btnContinuar.style.opacity = "0.5";
+    } else {
+        btnContinuar.disabled = false;
+        btnContinuar.style.opacity = "1";
+    }
+}
+
+
 function entrarSistema() {
     const telaInicial = document.querySelector(".telaInicial");
     const app = document.querySelector(".app");
@@ -38,6 +59,43 @@ function entrarSistema() {
     app.classList.remove("escondido");
     app.classList.add("visivel");
     renderizarProdutos("entradas");
+}
+
+async function cancelarPedido() {
+
+    const confirmar = await Swal.fire({
+        title: "Deseja cancelar pedido?",
+        text: "Seu pedido será apagado!",
+        icon: "warning",
+
+        showCancelButton: true,
+
+        confirmButtonText: "Sim",
+        cancelButtonText: "Não",
+
+        iconColor: "#ffffff",
+        confirmButtonColor: "#194e00",
+        cancelButtonColor: "#8b0000",
+        background: "#000000d0",
+        color: "#fff"
+
+        
+    });
+
+    if (confirmar.isConfirmed) {
+
+        carrinho = [];
+
+        atualizarCarrinho();
+
+        const app = document.querySelector(".app");
+        const telaInicial = document.querySelector(".telaInicial");
+
+        app.classList.add("escondido");
+
+        telaInicial.classList.remove("escondido");
+        botaoVerItem()
+    }
 }
 
 function botaoVerItem() {

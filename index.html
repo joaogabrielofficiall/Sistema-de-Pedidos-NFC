@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="botões-conteudo-carrinho">
-                    <button onclick="cancelarPedido()" class="botaoCancelar">Cancelar Pedido</button>
+                    <button onclick="cancelarPedido()" class="cancelarPedido">Cancelar Pedido</button>
                     <button onclick="verPedido()" class="botaoVer">ver seu pedido</button>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                 </button>
 
                 <div class="acoes">
-                    <button class="cancelarPedido">Cancelar pedido</button>
+                    <button class="cancelarPedido" onclick="cancelarPedido()">Cancelar pedido</button>
                     <button class="continuarComprando" onclick="aparecerCarrinho()">Continuar comprando</button>           
                 </div>
             </footer>
@@ -126,4 +126,5 @@
 </body>
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>
