@@ -75,6 +75,24 @@ def buscar_pedido_aberto(mesa_id):
     else:
         return jsonify({"message": "Nenhum pedido aberto"})
     
+@app.route('/produtos', methods=['GET'])
+def listar_produtos():
+
+    conn = conectar_bd()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT *
+        FROM Produtos
+    """)
+
+    produtos = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify(produtos)
+    
 
 #Essa função adiciona o pedido no BD. *Carrinho*
 @app.route('/pedido/<int:pedido_id>/item', methods=['POST'])
@@ -147,4 +165,5 @@ def listar_itens(pedido_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 

@@ -1,42 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
     verificarPedidoExistente();
     botaoVerItem();
-    
+    buscarProdutos();
 });
 
-/*Função de exemplo*/
+/// Variaveis 
 
-const produtos = [
-    {
-        nome: "Batata frita",
-        preco: 20.00,
-        categoria: "entradas",
-        imagem: "batatafrita.png"
-    },
-    {
-        nome: "Batata frita com bacon e cheddar",
-        preco: 36.00,
-        categoria: "entradas",
-        imagem: "batatacomcheddarebacon.png"
-    },
-    {
-        nome: "Nuggets",
-        preco: 24.00,
-        categoria: "entradas",
-        imagem: "nuggets.png"
-    },
-    {
-        nome: "Big Black",
-        preco: 30.00,
-        categoria: "burgers tradicionais",
-        imagem: "tradicional BB.png"
-    }
-];
+let produtos = [];
 
 let carrinho = [];
 
-
 let pedido_id = null;
+
+const categorias = {
+    entradas: 1,
+    "burgers tradicionais": 2,
+    "burgers especiais": 3,
+    vegetariano: 4,
+    bebidas: 5,
+    "nossas pizzas": 6,
+    "pizzas doces": 7,
+    sobremesas: 8
+};
+
+
+
+async function buscarProdutos() {
+
+    const response = await fetch(
+        "http://localhost:5000/produtos"
+    );
+
+    produtos = await response.json();
+
+    renderizarProdutos("entradas");
+
+    console.log(produtos)
+}
+
+
+
+
+/// Função só para tirar a tela inicial
+function entrarSistema() {
+    const telaInicial = document.querySelector(".telaInicial");
+    const app = document.querySelector(".app");
+
+    telaInicial.classList.remove("visivel");
+    telaInicial.classList.add("escondido");
+
+    app.classList.remove("escondido");
+    app.classList.add("visivel");
+    renderizarProdutos("entradas");
+}
 
 
 /*Cria uma nova comanda no Bancos de dados. Back: "INSERT INTO Pedidos (mesa_id, status) VALUES (%s, 'aberto')",*/ 
@@ -108,42 +124,13 @@ async function verificarPedidoExistente() {
 
 async function continuarPedido() {
 
-    const params = new URLSearchParams(window.location.search);
-    const mesaId = params.get("mesa");
+    entrarSistema();
 
-    const response = await fetch(
-        `http://localhost:5000/pedido/mesa/${mesaId}`
-    );
-
-    /// Resposta do Back
-    const data = await response.json();
-
-    if (data.id) {
-
-        pedido_id = data.id;
-
-        entrarSistema();
-
-    } else {
-
-        alert("Nenhum pedido aberto");
-
-    }
-
+    atualizarCarrinho();
 }
 
 
-function entrarSistema() {
-    const telaInicial = document.querySelector(".telaInicial");
-    const app = document.querySelector(".app");
 
-    telaInicial.classList.remove("visivel");
-    telaInicial.classList.add("escondido");
-
-    app.classList.remove("escondido");
-    app.classList.add("visivel");
-    renderizarProdutos("entradas");
-}
 
 async function cancelarPedido() {
 
@@ -261,27 +248,36 @@ function verPedido(){
 }
 
 function renderizarProdutos(categoria) {
+
     const container = document.querySelector(".produtos");
 
-    container.innerHTML = ""; // limpa
+    container.innerHTML = "";
 
-    const filtrados = produtos.filter(p => p.categoria === categoria);
+    const filtrados = produtos.filter(
+        p => p.categoria_id === categorias[categoria]
+    );
 
     filtrados.forEach((produto, index) => {
+
         container.innerHTML += `
             <div class="card" data-index="${index}">
-                <img src="imagens/${produto.imagem}" alt="">
+                <img src="imagens/${produto.imagem_url}" alt="">
+
                 <div class="info">
                     <h3>${produto.nome}</h3>
-                    <span class="preco">R$ ${produto.preco.toFixed(2)}</span>
+
+                    <span class="preco">R$ ${Number(produto.preco).toFixed(2)}</span>
                 </div>
             </div>
         `;
     });
 
     document.querySelectorAll(".card").forEach(card => {
+
         card.addEventListener("click", () => {
+
             const index = card.dataset.index;
+
             adicionarAoCarrinho(filtrados[index]);
         });
     });
