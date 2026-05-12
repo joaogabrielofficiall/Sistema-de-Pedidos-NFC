@@ -1,3 +1,5 @@
+console.log("SCRIPT CARREGADO");
+
 document.addEventListener("DOMContentLoaded", () => {
     verificarPedidoExistente();
     botaoVerItem();
@@ -55,29 +57,47 @@ function entrarSistema() {
 }
 
 /*Cria uma nova comanda no Bancos de dados. Back: "INSERT INTO Pedidos (mesa_id, status) VALUES (%s, 'aberto')",*/ 
-let criandoPedido = false;
 
 async function novoPedido() {
 
-    if (criandoPedido) return;
-    criandoPedido = true;
+    if (pedido_id) {
+        entrarSistema();
+        return;
+    }
 
     const params = new URLSearchParams(window.location.search);
+
     const mesaId = params.get("mesa");
 
-    const response = await fetch("http://localhost:5000/pedido", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mesa_id: mesaId })
-    });
+    try {
 
-    const data = await response.json();
-    pedido_id = data.pedido_id;
+        const response = await fetch("http://localhost:5000/pedido", {
+            method: "POST",
 
-    entrarSistema();
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-    criandoPedido = false;
+            body: JSON.stringify({
+                mesa_id: mesaId
+            })
+        });
+
+        const data = await response.json();
+
+        pedido_id = data.pedido_id;
+
+        console.log("Pedido criado:", pedido_id);
+
+        entrarSistema();
+
+    } catch (erro) {
+
+        console.log("Erro ao criar pedido:", erro);
+
+    }
 }
+
 
 /// Verifica se o pedido Existe no Bancos de dados
 async function verificarPedidoExistente() {
@@ -129,6 +149,7 @@ async function continuarPedido() {
     atualizarCarrinho();
     verPedido();
 }
+
 
 
 
